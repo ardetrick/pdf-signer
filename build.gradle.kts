@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("io.freefair.lombok") version "8.4"
+    id("io.freefair.lombok") version "8.6"
     id("dev.jbang") version "0.2.0"
 }
 
