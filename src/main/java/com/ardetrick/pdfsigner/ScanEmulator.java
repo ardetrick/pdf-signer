@@ -12,6 +12,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 import static com.ardetrick.pdfsigner.RandomUtils.getRandomDouble;
 import static com.ardetrick.pdfsigner.RandomUtils.getRandomFloatBetween;
@@ -33,7 +35,9 @@ public class ScanEmulator {
                                                ScanEmulator.Properties properties) throws IOException {
         try (PDDocument modifiedDocument = new PDDocument()) {
             emulateScan(document, modifiedDocument, properties);
-            modifiedDocument.save(properties.scanEmulationFileOutputName);
+
+            String formatted = DateTimeFormatter.ISO_INSTANT.format(Instant.now());
+            modifiedDocument.save(String.join(".", properties.scanEmulationFileOutputName, formatted, ".pdf"));
         }
     }
 

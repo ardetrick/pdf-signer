@@ -43,5 +43,5 @@ bin/
 .DS_Store
 
 ### Local Resources
-files
+private
 .jbang/

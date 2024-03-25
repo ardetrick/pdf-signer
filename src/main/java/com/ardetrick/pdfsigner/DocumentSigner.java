@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
 
 import static com.ardetrick.pdfsigner.RandomUtils.getRandomFloatBetween;
 import static java.lang.Integer.parseInt;
@@ -82,11 +81,15 @@ public class DocumentSigner {
 
     private static PDImageXObject randomlySelectSignature(PDDocument document,
                                                           DocumentSigner.Properties properties) {
-        File folder = new File(properties.signatureImagesDirectory);
+        var signatureImagesDirectory = properties.signatureImagesDirectory;
 
-        Random random = new Random();
+        return getSignatureFromFileSystem(document, signatureImagesDirectory);
+    }
+
+    private static PDImageXObject getSignatureFromFileSystem(PDDocument document, String signatureImagesDirectory) {
+        File folder = new File(signatureImagesDirectory);
         File[] files = requireNonNull(folder.listFiles());
-        File randomFile = files[random.nextInt(files.length)];
+        File randomFile = files[RandomUtils.nextInt(files.length)];
         try {
             return PDImageXObject.createFromFileByExtension(randomFile, document);
         } catch (IOException e) {

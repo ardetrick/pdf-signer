@@ -9,8 +9,14 @@ import java.io.IOException;
 public class PdfLoader {
 
     public static PDDocument loadPdf(Properties properties) {
+        var fileInputName = properties.fileInputName();
+
+        return getPdfFromFilePath(fileInputName);
+    }
+
+    private static PDDocument getPdfFromFilePath(String fileInputName) {
         try {
-            return Loader.loadPDF(new File(properties.fileInputName()));
+            return Loader.loadPDF(new File(fileInputName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

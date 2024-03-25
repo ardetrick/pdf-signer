@@ -16,8 +16,8 @@ Alternatively you can download the code and run Main directly.
 
 ## Configurations
 
-By default, the `config.properties` file in the root of the repository will be used. To use a different
-configuration file, provide the file path as the first argument.
+The script accepts one argument, a relative path to a properties file. When no file is provided, the example file properties
+are used to demo the feature without any setup.
 
 ``
 jbang https://github.com/ardetrick/pdf-signer/blob/main/src/main/java/com/ardetrick/pdfsigner/Main.java ./different/path/custom.properties
@@ -48,3 +48,20 @@ signer.date.position-y=642
 signer.page-index-zero-based=3
 signer.signature.position-y=640
 ```
+
+## Creating Signature Files
+
+Using multiple signature files can add an extra level of entropy, reducing the possibility of automated checks
+rejecting a signature as a duplicate.
+
+### MacOS
+
+1. Create a copy of: `files/images/empty-signature.png`
+2. Open it in Preview.
+3. From the menu bar, click `Tools` -> `Annotate` -> `Signature` -> `Manage Signatures`.
+4. Click `Create Signature`.
+5. Follow the instructions to create a signature. 
+6. Add the signature to the png.
+7. Expand the signature and crop it to fit.
+8. Save.
+
