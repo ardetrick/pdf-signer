@@ -8,8 +8,10 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static com.ardetrick.pdfsigner.RandomUtils.getRandomFloatBetween;
 import static java.lang.Integer.parseInt;
@@ -87,9 +89,32 @@ public class DocumentSigner {
     }
 
     private static PDImageXObject getSignatureFromFileSystem(PDDocument document, String signatureImagesDirectory) {
+        File randomFile;
+
+        // Not ideal, but this is easier than trying to list resources from a jar, which is required
+        // when running the example for a GitHub link.
+        // TODO: Revisit this approach.
+        if (signatureImagesDirectory.equals("files/example/signatures")) {
+            // This list must be kept in sync with what is added in Main.java.
+            var path = List.of("files/example/signatures/signature-1.png",
+                               "files/example/signatures/signature-1.png")
+                    .get(RandomUtils.nextIntExclusive(2));
+
+            InputStream resourceAsStream = DocumentSigner.class.getClassLoader().getResourceAsStream(path);
+
+            if (resourceAsStream == null) {
+                throw new RuntimeException("Could not find file at path: " + path);
+            }
+            try {
+                return PDImageXObject.createFromByteArray(document, resourceAsStream.readAllBytes(), path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         File folder = new File(signatureImagesDirectory);
         File[] files = requireNonNull(folder.listFiles());
-        File randomFile = files[RandomUtils.nextInt(files.length)];
+        randomFile = files[RandomUtils.nextIntExclusive(files.length)];
         try {
             return PDImageXObject.createFromFileByExtension(randomFile, document);
         } catch (IOException e) {

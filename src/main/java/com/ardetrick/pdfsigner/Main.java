@@ -9,6 +9,9 @@
 
 // Only useful for the example case, does not have use otherwise.
 //FILES files/example/example.properties=../../../../../../files/example/example.properties
+//FILES files/example/document/example-document.pdf=../../../../../../files/example/document/example-document.pdf
+//FILES files/example/signatures/signature-1.png=../../../../../../files/example/signatures/signature-1.png
+//FILES files/example/signatures/signature-2.png=../../../../../../files/example/signatures/signature-2.png
 
 package com.ardetrick.pdfsigner;
 
