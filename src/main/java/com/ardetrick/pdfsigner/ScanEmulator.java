@@ -37,7 +37,7 @@ public class ScanEmulator {
             emulateScan(document, modifiedDocument, properties);
 
             String formatted = DateTimeFormatter.ISO_INSTANT.format(Instant.now());
-            modifiedDocument.save(String.join(".", properties.scanEmulationFileOutputName, formatted, ".pdf"));
+            modifiedDocument.save(String.join(".", properties.scanEmulationFileOutputName, formatted, "pdf"));
         }
     }
 
