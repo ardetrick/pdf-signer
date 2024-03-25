@@ -17,7 +17,12 @@ public class PropertiesLoader {
     }
 
     public static Properties loadingExampleProperties() {
-        return loadCustomProperties(EXAMPLE_PROPERTIES_PATH);
+        // Example properties files are packaged in the jbang jar to support invoking the script via GitHub link.
+        try (InputStream is = PropertiesLoader.class.getClassLoader().getResourceAsStream(EXAMPLE_PROPERTIES_PATH)) {
+            return loadProperties(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static Properties loadProperties(InputStream input) throws IOException {
